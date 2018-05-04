@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const iframeAPILogger = {
+const logger = {
   isLoggerOn: false,
   log: function(...items) {
     if (this.isLoggerOn) {
@@ -9,9 +9,9 @@ const iframeAPILogger = {
     }
   }
 };
-iframeAPILogger.isLoggerOn = false;
+logger.isLoggerOn = false;
 
-class Player extends React.Component {
+class YRPlayer extends React.Component {
   shouldComponentUpdate(previousProps) {
     if (
       !this.player ||
@@ -20,11 +20,11 @@ class Player extends React.Component {
       if (this.props.youtubeApiLoaded) {
         return true;
       } else {
-        iframeAPILogger.log("youtube API not loaded".toUpperCase());
+        logger.log("youtube API not loaded".toUpperCase());
         return false;
       }
     } else {
-      iframeAPILogger.log(
+      logger.log(
         "not creating a new player instance".toUpperCase(),
         this.player,
         this.props.source,
@@ -39,21 +39,21 @@ class Player extends React.Component {
       // ! Point of failure
       player.playVideo();
     } catch (e) {
-      iframeAPILogger.log(e);
+      logger.log(e);
     }
   }
 
   componentDidUpdate(previousProps) {
-    iframeAPILogger.log("calling component did update".toUpperCase());
-    iframeAPILogger.log("creating player instance".toUpperCase());
+    logger.log("calling component did update".toUpperCase());
+    logger.log("creating player instance".toUpperCase());
 
     this.player = new window["YT"].Player("player", {
       events: {
         onStateChange: this.onPlayerStateChange.bind(this),
         onReady: event => {
-          iframeAPILogger.log("player ready for events".toUpperCase());
+          logger.log("player ready for events".toUpperCase());
           if (this.props.autoPlayVideo) {
-            iframeAPILogger.log(
+            logger.log(
               "previous video was playing so playing this video also".toUpperCase(),
               event.target
             );
@@ -83,13 +83,13 @@ class Player extends React.Component {
 
   onPlayerStateChange(event) {
     if (event.data === window["YT"].PlayerState.ENDED) {
-      iframeAPILogger.log("video ended re-playing".toUpperCase(), event.target);
+      logger.log("video ended re-playing".toUpperCase(), event.target);
 
       if (this.props.repeat) {
         this.tryAndPlayVideo(event.target);
       }
     } else if (event.data === window["YT"].PlayerState.PLAYING) {
-      iframeAPILogger.log("playing the current video".toUpperCase());
+      logger.log("playing the current video".toUpperCase());
 
       if (this.props.onVideoPlayed) {
         this.props.onVideoPlayed();
@@ -98,7 +98,7 @@ class Player extends React.Component {
   }
 }
 
-Player.propTypes = {
+YRPlayer.propTypes = {
   source: PropTypes.string.isRequired,
   repeat: PropTypes.bool.isRequired,
   onVideoPlayed: PropTypes.func,
@@ -107,11 +107,11 @@ Player.propTypes = {
   autoPlayVideo: PropTypes.bool.isRequired
 };
 
-Player.defaultProps = {
+YRPlayer.defaultProps = {
   repeat: true,
   autoPlayVideo: false,
   styles: {},
   className: ""
 };
 
-export default Player;
+export default YRPlayer;
