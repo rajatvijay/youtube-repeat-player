@@ -1,6 +1,6 @@
 {
   "name": "youtube-repeat-player",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A react component to play youtube video even on repeat",
   "main": "dist/index.js",
   "scripts": {
