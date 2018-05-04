@@ -1,6 +1,15 @@
-import React from "react";
-import logger from "../logger";
-import { css } from "emotion";
+import React from 'react';
+import {css} from 'emotion';
+
+const iframeAPILogger = {
+  isLoggerOn: false,
+  log: function(...items) {
+    if (this.isLoggerOn) {
+      console.log(...items);
+    }
+  },
+};
+iframeAPILogger.isLoggerOn = true;
 
 const PlayerClass = css`
   display: block;
@@ -8,8 +17,6 @@ const PlayerClass = css`
   height: 360px;
   margin: auto;
 `;
-
-const { iframeAPILogger } = logger;
 
 class Player extends React.Component {
   shouldComponentUpdate(previousProps) {
@@ -20,12 +27,12 @@ class Player extends React.Component {
       if (this.props.youtubeApiLoaded) {
         return true;
       } else {
-        iframeAPILogger.log("youtube API not loaded".toUpperCase());
+        iframeAPILogger.log('youtube API not loaded'.toUpperCase());
         return false;
       }
     } else {
       iframeAPILogger.log(
-        "not creating a new player instance".toUpperCase(),
+        'not creating a new player instance'.toUpperCase(),
         this.player,
         this.props.source,
         previousProps.source
@@ -44,23 +51,23 @@ class Player extends React.Component {
   }
 
   componentDidUpdate(previousProps) {
-    iframeAPILogger.log("calling component did update".toUpperCase());
-    iframeAPILogger.log("creating player instance".toUpperCase());
+    iframeAPILogger.log('calling component did update'.toUpperCase());
+    iframeAPILogger.log('creating player instance'.toUpperCase());
 
-    this.player = new window["YT"].Player("player", {
+    this.player = new window['YT'].Player('player', {
       events: {
         onStateChange: this.onPlayerStateChange.bind(this),
         onReady: event => {
-          iframeAPILogger.log("player ready for events".toUpperCase());
+          iframeAPILogger.log('player ready for events'.toUpperCase());
           if (this.props.autoPlayVideo) {
             iframeAPILogger.log(
-              "previous video was playing so playing this video also".toUpperCase(),
+              'previous video was playing so playing this video also'.toUpperCase(),
               event.target
             );
             this.tryAndPlayVideo(event.target);
           }
-        }
-      }
+        },
+      },
     });
   }
 
@@ -71,7 +78,7 @@ class Player extends React.Component {
         title="player"
         width="560"
         height="315"
-        src={this.props.source + "?enablejsapi=1"}
+        src={this.props.source + '?enablejsapi=1'}
         frameBorder="0"
         id="player"
         allow="autoplay; encrypted-media"
@@ -81,11 +88,11 @@ class Player extends React.Component {
   }
 
   onPlayerStateChange(event) {
-    if (event.data === window["YT"].PlayerState.ENDED) {
-      iframeAPILogger.log("video ended re-playing".toUpperCase(), event.target);
+    if (event.data === window['YT'].PlayerState.ENDED) {
+      iframeAPILogger.log('video ended re-playing'.toUpperCase(), event.target);
       this.tryAndPlayVideo(event.target);
-    } else if (event.data === window["YT"].PlayerState.PLAYING) {
-      iframeAPILogger.log("playing the current video".toUpperCase());
+    } else if (event.data === window['YT'].PlayerState.PLAYING) {
+      iframeAPILogger.log('playing the current video'.toUpperCase());
       this.props.onVideoPlayed();
     }
   }
