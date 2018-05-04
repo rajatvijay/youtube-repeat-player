@@ -1,5 +1,5 @@
 import React from 'react';
-import {css} from 'emotion';
+import PropTypes from 'prop-types';
 
 const iframeAPILogger = {
   isLoggerOn: false,
@@ -11,12 +11,6 @@ const iframeAPILogger = {
 };
 iframeAPILogger.isLoggerOn = true;
 
-const PlayerClass = css`
-  display: block;
-  width: 720px;
-  height: 360px;
-  margin: auto;
-`;
 
 class Player extends React.Component {
   shouldComponentUpdate(previousProps) {
@@ -78,6 +72,8 @@ class Player extends React.Component {
         title="player"
         width="560"
         height="315"
+        style={...this.props.styles}
+        className={this.props.className}
         src={this.props.source + '?enablejsapi=1'}
         frameBorder="0"
         id="player"
@@ -90,12 +86,34 @@ class Player extends React.Component {
   onPlayerStateChange(event) {
     if (event.data === window['YT'].PlayerState.ENDED) {
       iframeAPILogger.log('video ended re-playing'.toUpperCase(), event.target);
-      this.tryAndPlayVideo(event.target);
+
+      if (this.props.repeat) {
+        this.tryAndPlayVideo(event.target);
+      }
     } else if (event.data === window['YT'].PlayerState.PLAYING) {
       iframeAPILogger.log('playing the current video'.toUpperCase());
-      this.props.onVideoPlayed();
+
+      if (this.props.onVideoPlayed) {
+        this.props.onVideoPlayed();
+      }
     }
   }
+}
+
+Player.propTypes = {
+  source: PropTypes.string.isRequired,
+  repeat: PropTypes.bool.isRequired,
+  onVideoPlayed: PropTypes.func,
+  styles: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired,
+  autoPlayVideo: PropTypes.bool.isRequired
+}
+
+Player.defaultProps = {
+  repeat: true,
+  autoPlayVideo: false,
+  styles: {},
+  className: ''
 }
 
 export default Player;
