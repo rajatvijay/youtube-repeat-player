@@ -2,10 +2,10 @@
   "name": "youtube-repeat-player",
   "version": "1.0.2",
   "description": "A react component to play youtube video even on repeat",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir lib",
     "deploy": "npm run build && npm publish"
   },
   "repository": {
