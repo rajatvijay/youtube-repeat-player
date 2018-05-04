@@ -1,0 +1,28 @@
+{
+  "name": "youtube-player",
+  "version": "1.0.0",
+  "description": "A react component to play youtube video even on repeat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajatvijay/youtube-player.git"
+  },
+  "keywords": [
+    "youtube-player",
+    "react-youtube-player",
+    "youtube",
+    "repeat",
+    "react",
+    "video",
+    "player"
+  ],
+  "author": "Rajat Vijay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rajatvijay/youtube-player/issues"
+  },
+  "homepage": "https://github.com/rajatvijay/youtube-player#readme"
+}
