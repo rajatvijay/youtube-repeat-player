@@ -9,7 +9,7 @@ const iframeAPILogger = {
     }
   }
 };
-iframeAPILogger.isLoggerOn = true;
+iframeAPILogger.isLoggerOn = false;
 
 class Player extends React.Component {
   shouldComponentUpdate(previousProps) {
@@ -67,7 +67,6 @@ class Player extends React.Component {
   render() {
     return (
       <iframe
-        className={PlayerClass}
         title="player"
         width="560"
         height="315"
