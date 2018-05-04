@@ -1,6 +1,10 @@
 # Youtube Repeat Player Component
 A react component to play youtube videos with a **feature to play them on repeat**
 
+
+## Watch it being used live
+[Youtueb on Repeat](https://youtube-on-repeat.netlify.com)
+
 ## Install
 `npm install --save youtube-repeat-player`
 
@@ -19,6 +23,9 @@ import YRPlayer from 'youtube-repeat-player';
 />
 
 ```
+
+
+
 ## Props
 
 | Prop Name | Required (Default Value) | Data Type | Description |
@@ -29,6 +36,7 @@ import YRPlayer from 'youtube-repeat-player';
 | `styles` | No | Object | All the inline styles, directly passed to the iframe element |
 | `className` | No | String | Name of the class passed direclty to the iframe element | 
 | `autoPlayVideo` | No(false) | Boolean | Signifies whether the video should be auto played |
+
 
 
 ## Note: Using this component will require loading the youtube iframe API manually. 
@@ -54,6 +62,8 @@ window['onYouTubeIframeAPIReady'] = e => {
 
 // This setState will cause the YRPlayer component to re-render
 ```
+
+
 
 ## Contributing
 In case of bug or feature request, feel free to file an issue.
