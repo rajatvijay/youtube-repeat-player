@@ -15,7 +15,7 @@ class YRPlayer extends React.Component {
   shouldComponentUpdate(previousProps) {
     if (
       !this.player ||
-      (this.props.source && previousProps.source !== this.props.source)
+      (this.props.videoId && previousProps.videoId !== this.props.videoId)
     ) {
       if (this.props.youtubeApiLoaded) {
         return true;
@@ -27,8 +27,8 @@ class YRPlayer extends React.Component {
       logger.log(
         "not creating a new player instance".toUpperCase(),
         this.player,
-        this.props.source,
-        previousProps.source
+        this.props.videoId,
+        previousProps.videoId
       );
     }
     return false;
@@ -65,6 +65,9 @@ class YRPlayer extends React.Component {
   }
 
   render() {
+    const src = `https://www.youtube.com/embed/${
+      this.props.videoId
+    }?enablejsapi=1`;
     return (
       <iframe
         title="player"
@@ -72,7 +75,7 @@ class YRPlayer extends React.Component {
         height="315"
         style={{ ...this.props.styles }}
         className={this.props.className}
-        src={this.props.source + "?enablejsapi=1"}
+        src={src}
         frameBorder="0"
         id="player"
         allow="autoplay; encrypted-media"
@@ -99,7 +102,7 @@ class YRPlayer extends React.Component {
 }
 
 YRPlayer.propTypes = {
-  source: PropTypes.string.isRequired,
+  videoId: PropTypes.string.isRequired,
   repeat: PropTypes.bool.isRequired,
   onVideoPlayed: PropTypes.func,
   styles: PropTypes.object.isRequired,
